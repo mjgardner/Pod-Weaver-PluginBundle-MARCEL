@@ -72,7 +72,7 @@ equivalent to the following:
     [Authors]
     [Legal]
 
-=func mvp_bundle_config
+=function mvp_bundle_config
 
 Defines the bundle's contents.
 
