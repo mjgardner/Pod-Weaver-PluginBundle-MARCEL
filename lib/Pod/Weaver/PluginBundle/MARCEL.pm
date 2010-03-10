@@ -39,6 +39,16 @@ sub mvp_bundle_config {
 
 =pod
 
+=for test_synopsis
+1;
+__END__
+
+=head1 SYNOPSIS
+
+In C<weaver.ini>:
+
+    [@MARCEL]
+
 =head1 DESCRIPTION
 
 This is the bundle used by default for my distributions. It is nearly
