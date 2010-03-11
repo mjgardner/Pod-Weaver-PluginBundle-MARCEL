@@ -29,9 +29,11 @@ sub mvp_bundle_config {
 
     [ '@Default/postlude',  _exp('Region'),    { region_name => 'postlude' } ],
 
-    [ '@Default/Installation', _exp('Installation'), {} ],
-    [ '@Default/Authors',      _exp('Authors'),      {} ],
-    [ '@Default/Legal',        _exp('Legal'),        {} ],
+    [ '@Default/Installation',       _exp('Installation'),       {} ],
+    [ '@Default/BugsAndLimitations', _exp('BugsAndLimitations'), {} ],
+    [ '@Default/Availability',       _exp('Availability'),       {} ],
+    [ '@Default/Authors',            _exp('Authors'),            {} ],
+    [ '@Default/Legal',              _exp('Legal'),              {} ],
   )
 }
 
@@ -79,6 +81,8 @@ equivalent to the following:
     [Region  / postlude]
 
     [Installation]
+    [BugsAndLimitations]
+    [Availability]
     [Authors]
     [Legal]
 
