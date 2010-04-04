@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+
+1.100950  2010-04-05 00:24:28 Europe/Vienna
     - added [BugsAndLimitations]
     - added [Availability]
     - methods are now collected with [CollectWithAutoDoc]
