@@ -37,11 +37,15 @@ sub mvp_bundle_config {
 }
 1;
 
-=pod
+=begin :prelude
+
+=for stopwords MARCEL
 
 =for test_synopsis
 1;
 __END__
+
+=end :prelude
 
 =head1 SYNOPSIS
 
