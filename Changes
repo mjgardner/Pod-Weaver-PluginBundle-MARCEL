@@ -1,6 +1,7 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+    - [Availability]: remove information on GitHub
 
 1.100950  2010-04-05 00:24:28 Europe/Vienna
     - added [BugsAndLimitations]
