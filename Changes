@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+
+1.100980  2010-04-08 16:35:10 Europe/Vienna
     - [Availability]: remove information on GitHub
 
 1.100950  2010-04-05 00:24:28 Europe/Vienna
