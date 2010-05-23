@@ -4,13 +4,12 @@ use warnings;
 
 package Pod::Weaver::PluginBundle::MARCEL;
 
-# ABSTRACT: build POD documentation like MARCEL
+# ABSTRACT: Build POD documentation like MARCEL
 use namespace::autoclean;
 use Pod::Weaver::Config::Assembler;
 
 # plugins used
 use Pod::Weaver::Section::Installation;
-use Pod::Weaver::Section::CollectWithAutoDoc;
 
 sub _exp { Pod::Weaver::Config::Assembler->expand_package($_[0]) }
 
@@ -24,8 +23,8 @@ sub mvp_bundle_config {
         [ 'DESCRIPTION',      _exp('Generic'), {} ],
         [ 'OVERVIEW',         _exp('Generic'), {} ],
         [ 'ATTRIBUTES',       _exp('Collect'), { command     => 'attr' } ],
-        [ 'METHODS',   _exp('CollectWithAutoDoc'), { command => 'method' } ],
-        [ 'FUNCTIONS', _exp('Collect'),            { command => 'function' } ],
+        [ 'METHODS',          _exp('Collect'), { command => 'method' } ],
+        [ 'FUNCTIONS',        _exp('Collect'), { command => 'function' } ],
         [ '@Default/Leftovers', _exp('Leftovers'), {} ],
         [ '@Default/postlude', _exp('Region'), { region_name => 'postlude' } ],
         [ '@Default/Installation',       _exp('Installation'),       {} ],

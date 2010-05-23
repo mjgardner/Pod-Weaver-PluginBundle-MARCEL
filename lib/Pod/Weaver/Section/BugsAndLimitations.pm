@@ -4,7 +4,7 @@ use warnings;
 
 package Pod::Weaver::Section::BugsAndLimitations;
 
-# ABSTRACT: add a BUGS AND LIMITATIONS pod section
+# ABSTRACT: Add a BUGS AND LIMITATIONS pod section
 use Moose;
 with 'Pod::Weaver::Role::Section';
 use namespace::autoclean;
@@ -12,7 +12,7 @@ use Moose::Autobox;
 
 sub weave_section {
     my ($self, $document, $input) = @_;
-    my $bugtracker = $input->{zilla}->distmeta->{resources}{bugtracker}
+    my $bugtracker = $input->{zilla}->distmeta->{resources}{bugtracker}{url}
       || 'http://rt.cpan.org';
     $document->children->push(
         Pod::Elemental::Element::Nested->new(
