@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+
+1.101520  2010-06-01 12:40:24 Europe/Vienna
     - METHODS use Collect, not CollectWithAutoDoc
     - fix "Bugs and Limitations" section to work with Dist::Zilla v3 and
       CPAN::Meta::Converter
