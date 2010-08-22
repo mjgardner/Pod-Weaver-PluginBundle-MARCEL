@@ -1,6 +1,7 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+    - made Availability plugin use dist metadata info (nigelm)
 
 1.101520  2010-06-01 12:40:24 Europe/Vienna
     - METHODS use Collect, not CollectWithAutoDoc

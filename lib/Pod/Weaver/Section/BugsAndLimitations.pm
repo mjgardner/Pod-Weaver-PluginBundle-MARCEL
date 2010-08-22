@@ -35,11 +35,13 @@ EOPOD
 }
 1;
 
-=pod
+=begin :prelude
 
 =for test_synopsis
 1;
 __END__
+
+=end :prelude
 
 =head1 SYNOPSIS
 
