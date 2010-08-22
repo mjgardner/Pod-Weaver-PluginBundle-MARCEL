@@ -1,6 +1,8 @@
 Revision history for Perl extension {{$dist->name}}
 
 {{$NEXT}}
+
+1.102340  2010-08-22 20:07:24 Europe/Vienna
     - made Availability plugin use dist metadata info (nigelm)
 
 1.101520  2010-06-01 12:40:24 Europe/Vienna
