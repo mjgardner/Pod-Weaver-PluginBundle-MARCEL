@@ -140,9 +140,38 @@ In C<weaver.ini>:
 
 =head1 OVERVIEW
 
-This section plugin will produce a hunk of Pod that lists known bugs and
-refers to the bugtracker URL. The plugin is automatically used by the
-C<@MARCEL> weaver bundle.
+This section plugin will produce a hunk of Pod that gives
+information about the availability and development of the project
+or module.
+
+All information used to generate the pod text is taken from the
+L<Dist::Zilla::Plugin::MetaConfig> C<distmeta> information, so this
+will only work within a L<Dist::Zilla> environment.
+
+At present 3 POD paragraphs may be generated within the section:-
+
+=over 4
+
+=item * Home page information - this is only generated if the home
+page is defined within C<distmeta> and if that home page is
+different to the CPAN page for the module.  The distmeta key
+for this information is C<resources.homepage>
+
+=item * CPAN generic information with a link to the module on CPAN.
+
+=item * Development information, including the location of
+development source control repositories. The repository type is
+assumed to be git, although this can changed (distmeta key
+C<resources.repository.type>).
+
+If the repository is recognised to be a github repository the
+boilerplate text is modified to reflect a more git/github mechanism
+for co-operative development. 
+
+=back
+
+The plugin is automatically used by the C<@MARCEL> weaver bundle -
+see L<Pod::Weaver::PluginBundle::MARCEL>.
 
 =function weave_section
 
