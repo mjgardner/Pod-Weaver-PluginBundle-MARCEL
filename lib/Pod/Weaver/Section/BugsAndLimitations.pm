@@ -17,12 +17,12 @@ sub weave_section {
                 content  => 'BUGS AND LIMITATIONS',
                 children => [
                     Pod::Elemental::Element::Pod5::Ordinary->new(
-                        {   content => <<EOPOD,
+                        {   content => <<"END_POD",
 No bugs have been reported.
 
 Please report any bugs or feature requests through the web interface at
 L<$bugtracker>.
-EOPOD
+END_POD
                         }
                     ),
                 ],
