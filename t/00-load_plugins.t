@@ -8,9 +8,9 @@ use Readonly;
 
 Readonly my @PLUGINS => (
     qw(
-      Availability
-      BugsAndLimitations
-      )
+        Availability
+        BugsAndLimitations
+        )
 );
 
 my $assembler = Pod::Weaver::Config::Assembler->new();
@@ -25,10 +25,8 @@ $assembler->finalize();
 my $weaver = Pod::Weaver->new_from_config_sequence( $assembler->sequence() );
 
 for my $plugin (@PLUGINS) {
-    ok(
-        (
-            grep { $ARG->plugin_name() eq $plugin }
-              @{ $weaver->plugins_with('-Section') }
+    ok( (   grep { $ARG->plugin_name() eq $plugin }
+                @{ $weaver->plugins_with('-Section') }
         ),
         "load $plugin",
     );

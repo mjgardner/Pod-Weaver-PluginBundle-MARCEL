@@ -11,7 +11,7 @@ use Pod::Weaver::Config::Assembler;
 # plugins used
 use Pod::Weaver::Section::Installation;
 
-sub _exp { Pod::Weaver::Config::Assembler->expand_package($_[0]) }
+sub _exp { Pod::Weaver::Config::Assembler->expand_package( $_[0] ) }
 
 sub mvp_bundle_config {
     return (
@@ -23,10 +23,11 @@ sub mvp_bundle_config {
         [ 'DESCRIPTION',      _exp('Generic'), {} ],
         [ 'OVERVIEW',         _exp('Generic'), {} ],
         [ 'ATTRIBUTES',       _exp('Collect'), { command     => 'attr' } ],
-        [ 'METHODS',          _exp('Collect'), { command => 'method' } ],
-        [ 'FUNCTIONS',        _exp('Collect'), { command => 'function' } ],
+        [ 'METHODS',          _exp('Collect'), { command     => 'method' } ],
+        [ 'FUNCTIONS', _exp('Collect'), { command => 'function' } ],
         [ '@Default/Leftovers', _exp('Leftovers'), {} ],
-        [ '@Default/postlude', _exp('Region'), { region_name => 'postlude' } ],
+        [   '@Default/postlude', _exp('Region'), { region_name => 'postlude' }
+        ],
         [ '@Default/Installation',       _exp('Installation'),       {} ],
         [ '@Default/BugsAndLimitations', _exp('BugsAndLimitations'), {} ],
         [ '@Default/Availability',       _exp('Availability'),       {} ],

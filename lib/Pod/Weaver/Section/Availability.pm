@@ -11,13 +11,20 @@ use namespace::autoclean;
 use Moose::Autobox;
 
 # add a set of attributes to hold the repo information
-has zilla => ( is => 'rw', isa => 'Dist::Zilla', handles => [ 'name', 'distmeta' ] );
-has homepage_url => ( is => 'rw', isa => 'Str',  lazy => 1, builder => '_build_homepage_url' );
-has cpan_url     => ( is => 'rw', isa => 'Str',  lazy => 1, builder => '_build_cpan_url' );
-has repo_type    => ( is => 'rw', isa => 'Str',  lazy => 1, builder => '_build_repo_type' );
-has repo_url     => ( is => 'rw', isa => 'Str',  lazy => 1, builder => '_build_repo_url' );
-has repo_web     => ( is => 'rw', isa => 'Str',  lazy => 1, builder => '_build_repo_web' );
-has is_github    => ( is => 'rw', isa => 'Bool', lazy => 1, builder => '_build_is_github' );
+has zilla =>
+    ( is => 'rw', isa => 'Dist::Zilla', handles => [ 'name', 'distmeta' ] );
+has homepage_url =>
+    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_homepage_url' );
+has cpan_url =>
+    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_cpan_url' );
+has repo_type =>
+    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_repo_type' );
+has repo_url =>
+    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_repo_url' );
+has repo_web =>
+    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_repo_web' );
+has is_github =>
+    ( is => 'rw', isa => 'Bool', lazy => 1, builder => '_build_is_github' );
 
 sub weave_section {
     my ( $self, $document, $input ) = @_;
@@ -25,10 +32,12 @@ sub weave_section {
     $self->zilla( $input->{zilla} );
     $document->children->push(
         Pod::Elemental::Element::Nested->new(
-            {
-                command  => 'head1',
+            {   command  => 'head1',
                 content  => 'AVAILABILITY',
-                children => [ $self->_homepage_pod, $self->_cpan_pod, $self->_development_pod, ],
+                children => [
+                    $self->_homepage_pod, $self->_cpan_pod,
+                    $self->_development_pod,
+                ],
             }
         ),
     );
@@ -37,7 +46,8 @@ sub weave_section {
 sub _build_homepage_url {
     my $self = shift;
 
-    return $self->distmeta->{resources}{homepage} || sprintf( 'http://search.cpan.org/dist/%s/', $self->name );
+    return $self->distmeta->{resources}{homepage}
+        || sprintf( 'http://search.cpan.org/dist/%s/', $self->name );
 }
 
 sub _build_cpan_url {
@@ -69,14 +79,16 @@ sub _build_is_github {
     my $self = shift;
 
     # we do this by looking at the URL for githubbyness
-    my $repourl = $self->distmeta->{resources}{repository}{url} or die "No repository URL set in distmeta";
+    my $repourl = $self->distmeta->{resources}{repository}{url}
+        or die "No repository URL set in distmeta";
     return ( ( $repourl =~ m|/github.com/| ) ? 1 : 0 );
 }
 
 sub _build_repo_data {
     my $self = shift;
 
-    my $repourl = $self->distmeta->{resources}{repository}{url} or die "No repository URL set in distmeta";
+    my $repourl = $self->distmeta->{resources}{repository}{url}
+        or die "No repository URL set in distmeta";
     my $repoweb;
     if ( $self->is_github ) {
 
@@ -97,7 +109,10 @@ sub _homepage_pod {
 
     # otherwise return some boilerplate
     return Pod::Elemental::Element::Pod5::Ordinary->new(
-        { content => sprintf( 'The project homepage is L<%s>.', $self->homepage_url ) } );
+        {   content => sprintf( 'The project homepage is L<%s>.',
+                $self->homepage_url )
+        }
+    );
 }
 
 sub _cpan_pod {
@@ -111,7 +126,8 @@ sub _cpan_pod {
         $self->cpan_url
     );
 
-    return Pod::Elemental::Element::Pod5::Ordinary->new( { content => $text } );
+    return Pod::Elemental::Element::Pod5::Ordinary->new(
+        { content => $text } );
 }
 
 sub _development_pod {
@@ -119,17 +135,24 @@ sub _development_pod {
 
     my $text;
     if ( $self->is_github ) {
-        $text = sprintf( "The development version lives at L<%s>\n", $self->repo_web );
-        $text .= sprintf( "and may be cloned from L<%s>.\n", $self->repo_url );
-        $text .= "Instead of sending patches, please fork this project using the standard\n";
+        $text = sprintf( "The development version lives at L<%s>\n",
+            $self->repo_web );
+        $text
+            .= sprintf( "and may be cloned from L<%s>.\n", $self->repo_url );
+        $text
+            .= "Instead of sending patches, please fork this project using the standard\n";
         $text .= "git and github infrastructure.\n"
 
     }
     else {
-        $text = sprintf( "The development version lives in a %s repository at L<%s>\n", $self->repo_type, $self->repo_web );
+        $text
+            = sprintf(
+            "The development version lives in a %s repository at L<%s>\n",
+            $self->repo_type, $self->repo_web );
     }
 
-    return Pod::Elemental::Element::Pod5::Ordinary->new( { content => $text } );
+    return Pod::Elemental::Element::Pod5::Ordinary->new(
+        { content => $text } );
 }
 
 1;
