@@ -10,3 +10,6 @@ lib_sections = NAME | VERSION | SYNOPSIS | COPYRIGHT AND LICENSE
 
 [Subroutines::ProhibitCallsToUndeclaredSubs]
 exempt_subs = Carp::croak Moose::has Moose::with
+
+[Subroutines::ProhibitUnusedPrivateSubroutines]
+private_name_regex = _(?!build_)\w+

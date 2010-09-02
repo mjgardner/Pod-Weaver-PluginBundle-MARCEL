@@ -43,35 +43,21 @@ sub _build_homepage_url {
 }
 
 sub _build_cpan_url {
-    my $self = shift;
-
-    return sprintf 'http://search.cpan.org/dist/%s/', $self->name;
+    return sprintf 'http://search.cpan.org/dist/%s/', shift->name;
 }
 
+# if we don't know we default to git...
 sub _build_repo_type {
-    my $self = shift;
-
-    # if we don't know we default to git...
-    return $self->distmeta->{resources}{repository}{type} || 'git';
+    return shift->distmeta->{resources}{repository}{type} || 'git';
 }
 
-sub _build_repo_url {
-    my $self = shift;
-
-    return ( $self->_build_repo_data )[0];
-}
-
-sub _build_repo_web {
-    my $self = shift;
-
-    return ( $self->_build_repo_data )[1];
-}
+sub _build_repo_url { return ( shift->_build_repo_data )[0] }
+sub _build_repo_web { return ( shift->_build_repo_data )[1] }
 
 sub _build_is_github {
-    my $self = shift;
 
     # we do this by looking at the URL for githubbyness
-    my $repourl = $self->distmeta->{resources}{repository}{url}
+    my $repourl = shift->distmeta->{resources}{repository}{url}
         or croak 'No repository URL set in distmeta';
     return scalar $repourl =~ m{/github [.] com/};
 }
