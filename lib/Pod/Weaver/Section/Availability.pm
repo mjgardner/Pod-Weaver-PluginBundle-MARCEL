@@ -3,6 +3,7 @@ package Pod::Weaver::Section::Availability;
 # ABSTRACT: Add an AVAILABILITY pod section
 
 use Carp;
+use English '-no_match_vars';
 use Moose;
 with 'Pod::Weaver::Role::Section';
 ## no critic (Modules::RequireExplicitInclusion)
@@ -13,12 +14,9 @@ use Regexp::DefaultFlags;
 # add a set of attributes to hold the repo information
 has zilla =>
     ( is => 'rw', isa => 'Dist::Zilla', handles => [ 'name', 'distmeta' ] );
-has homepage_url => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
-has cpan_url     => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
-has repo_type    => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
-has repo_url     => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
-has repo_web     => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
-has is_github    => ( is => 'rw', isa => 'Bool', lazy_build => 1 );
+has is_github => ( is => 'rw', isa => 'Bool', lazy_build => 1 );
+has [qw(homepage_url cpan_url repo_type repo_url repo_web)] =>
+    ( is => 'rw', isa => 'Str', lazy_build => 1 );
 
 sub weave_section {
     my ( $self, $document, $input ) = @_;
