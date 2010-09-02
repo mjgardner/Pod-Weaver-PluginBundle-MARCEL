@@ -82,8 +82,9 @@ sub _build_repo_data {
 sub _homepage_pod {
     my $self = shift;
 
-    # we suppress this if the CPAN URL is the homepage URL
-    return if $self->cpan_url eq $self->homepage_url;
+    # we suppress this if there is no homepage URL,
+    # or the CPAN URL is same as the homepage URL
+    return if !$self->homepage_url or ( $self->cpan_url eq $self->homepage_url );
 
     # otherwise return some boilerplate
     return Pod::Elemental::Element::Pod5::Ordinary->new(
