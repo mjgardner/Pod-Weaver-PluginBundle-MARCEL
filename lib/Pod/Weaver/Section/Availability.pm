@@ -38,13 +38,13 @@ sub _build_homepage_url {
     my $self = shift;
 
     return $self->distmeta->{resources}{homepage}
-        || sprintf( 'http://search.cpan.org/dist/%s/', $self->name );
+        || sprintf 'http://search.cpan.org/dist/%s/', $self->name;
 }
 
 sub _build_cpan_url {
     my $self = shift;
 
-    return sprintf( 'http://search.cpan.org/dist/%s/', $self->name );
+    return sprintf 'http://search.cpan.org/dist/%s/', $self->name;
 }
 
 sub _build_repo_type {
@@ -72,7 +72,7 @@ sub _build_is_github {
     # we do this by looking at the URL for githubbyness
     my $repourl = $self->distmeta->{resources}{repository}{url}
         or die "No repository URL set in distmeta";
-    return ( ( $repourl =~ m|/github.com/| ) ? 1 : 0 );
+    return scalar $repourl =~ m{/github.com/};
 }
 
 sub _build_repo_data {
@@ -96,12 +96,12 @@ sub _homepage_pod {
     my $self = shift;
 
     # we suppress this if the CPAN URL is the homepage URL
-    return if ( $self->cpan_url eq $self->homepage_url );
+    return if $self->cpan_url eq $self->homepage_url;
 
     # otherwise return some boilerplate
     return Pod::Elemental::Element::Pod5::Ordinary->new(
-        {   content => sprintf( 'The project homepage is L<%s>.',
-                $self->homepage_url )
+        {   content =>
+                "The project homepage is L<@{[ $self->homepage_url ]}>.",
         }
     );
 }
@@ -109,41 +109,27 @@ sub _homepage_pod {
 sub _cpan_pod {
     my $self = shift;
 
-    my $text = sprintf(
-        "%s\n%s\n%s L<%s>.",
-        'The latest version of this module is available from the Comprehensive Perl',
-        'Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN',
-        'site near you, or see',
-        $self->cpan_url
-    );
-
     return Pod::Elemental::Element::Pod5::Ordinary->new(
-        { content => $text } );
+        { content => <<"END_CPAN_TEXT" } );
+The latest version of this module is available from the Comprehensive Perl
+Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
+site near you, or see L<@{[ $self->cpan_url ]}>.
+END_CPAN_TEXT
 }
 
 sub _development_pod {
     my $self = shift;
 
-    my $text;
-    if ( $self->is_github ) {
-        $text = sprintf( "The development version lives at L<%s>\n",
-            $self->repo_web );
-        $text
-            .= sprintf( "and may be cloned from L<%s>.\n", $self->repo_url );
-        $text
-            .= "Instead of sending patches, please fork this project using the standard\n";
-        $text .= "git and github infrastructure.\n"
-
-    }
-    else {
-        $text
-            = sprintf(
-            "The development version lives in a %s repository at L<%s>\n",
-            $self->repo_type, $self->repo_web );
-    }
-
     return Pod::Elemental::Element::Pod5::Ordinary->new(
-        { content => $text } );
+        {   content => !$self->is_github
+            ? "The development version lives in a @{[ $self->repo_type ]} "
+                . "repository at L<@{[ $self->repo_web ]}>"
+            : <<"END_GITHUB_TEXT"} );
+The development version lives at L<@{[ $self->repo_web ]}>
+and may be cloned from L<@{[ $self->repo_url ]}>
+Instead of sending patches, please fork this project using the standard
+git and github infrastructure.
+END_GITHUB_TEXT
 }
 
 1;
