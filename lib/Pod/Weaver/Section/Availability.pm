@@ -10,24 +10,18 @@ use Moose::Autobox;
 # add a set of attributes to hold the repo information
 has zilla =>
     ( is => 'rw', isa => 'Dist::Zilla', handles => [ 'name', 'distmeta' ] );
-has homepage_url =>
-    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_homepage_url' );
-has cpan_url =>
-    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_cpan_url' );
-has repo_type =>
-    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_repo_type' );
-has repo_url =>
-    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_repo_url' );
-has repo_web =>
-    ( is => 'rw', isa => 'Str', lazy => 1, builder => '_build_repo_web' );
-has is_github =>
-    ( is => 'rw', isa => 'Bool', lazy => 1, builder => '_build_is_github' );
+has homepage_url => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
+has cpan_url     => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
+has repo_type    => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
+has repo_url     => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
+has repo_web     => ( is => 'rw', isa => 'Str',  lazy_build => 1 );
+has is_github    => ( is => 'rw', isa => 'Bool', lazy_build => 1 );
 
 sub weave_section {
     my ( $self, $document, $input ) = @_;
 
     $self->zilla( $input->{zilla} );
-    $document->children->push(
+    return $document->children->push(
         Pod::Elemental::Element::Nested->new(
             {   command  => 'head1',
                 content  => 'AVAILABILITY',
