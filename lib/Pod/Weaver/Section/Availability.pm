@@ -73,7 +73,7 @@ sub _build_is_github {
     # we do this by looking at the URL for githubbyness
     my $repourl = $self->distmeta->{resources}{repository}{url}
         or die 'No repository URL set in distmeta';
-    return scalar $repourl =~ m{/github\.com/};
+    return scalar $repourl =~ m{/github [.] com/};
 }
 
 sub _build_repo_data {
@@ -86,7 +86,7 @@ sub _build_repo_data {
 
         # strip the access method off - we can then add it as needed
         my $nomethod = $repourl;
-        $nomethod =~ s{\A (http|git|git\@github\.com) :/* }{}i;
+        $nomethod =~ s{\A (http|git|git [@] github [.] com) :/* }{}i;
         $repourl = "git://$nomethod";
         $repoweb = "http://$nomethod";
     }
