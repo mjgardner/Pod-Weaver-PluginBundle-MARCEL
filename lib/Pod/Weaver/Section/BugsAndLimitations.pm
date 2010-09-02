@@ -11,7 +11,7 @@ sub weave_section {
     my ( $self, $document, $input ) = @_;
     my $bugtracker = $input->{zilla}->distmeta->{resources}{bugtracker}{url}
         || 'http://rt.cpan.org';
-    $document->children->push(
+    return $document->children->push(
         Pod::Elemental::Element::Nested->new(
             {   command  => 'head1',
                 content  => 'BUGS AND LIMITATIONS',
