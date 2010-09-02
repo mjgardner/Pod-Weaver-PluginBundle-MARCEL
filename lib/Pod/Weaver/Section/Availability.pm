@@ -84,7 +84,9 @@ sub _homepage_pod {
 
     # we suppress this if there is no homepage URL,
     # or the CPAN URL is same as the homepage URL
-    return if !$self->homepage_url or ( $self->cpan_url eq $self->homepage_url );
+    return
+        if !$self->homepage_url
+            or ( $self->cpan_url eq $self->homepage_url );
 
     # otherwise return some boilerplate
     return Pod::Elemental::Element::Pod5::Ordinary->new(
