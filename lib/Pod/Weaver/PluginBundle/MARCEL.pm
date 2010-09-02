@@ -9,29 +9,36 @@ use Pod::Weaver::Config::Assembler;
 # plugins used
 use Pod::Weaver::Section::Installation;
 
-sub _exp { return Pod::Weaver::Config::Assembler->expand_package( $ARG[0] ) }
+sub _bundle_list {
+    my ( $section, $package, $params_ref ) = @ARG;
 
-sub mvp_bundle_config {
-    ## no critic (RequireInterpolationOfMetachars)
-    return (
-        [ '@Default/CorePrep', _exp('@CorePrep'), {} ],
-        [ '@Default/prelude', _exp('Region'),  { region_name => 'prelude' } ],
-        [ '@Default/Name',    _exp('Name'),    {} ],
-        [ '@Default/Version', _exp('Version'), {} ],
-        [ 'SYNOPSIS',         _exp('Generic'), {} ],
-        [ 'DESCRIPTION',      _exp('Generic'), {} ],
-        [ 'OVERVIEW',         _exp('Generic'), {} ],
-        [ 'ATTRIBUTES',       _exp('Collect'), { command     => 'attr' } ],
-        [ 'METHODS',          _exp('Collect'), { command     => 'method' } ],
-        [ 'FUNCTIONS', _exp('Collect'), { command => 'function' } ],
-        [ '@Default/Leftovers', _exp('Leftovers'), {} ],
-        [   '@Default/postlude', _exp('Region'), { region_name => 'postlude' }
-        ],
-        [ '@Default/Installation',       _exp('Installation'),       {} ],
-        [ '@Default/BugsAndLimitations', _exp('BugsAndLimitations'), {} ],
-        [ '@Default/Availability',       _exp('Availability'),       {} ],
-        [ '@Default/Authors',            _exp('Authors'),            {} ],
-        [ '@Default/Legal',              _exp('Legal'),              {} ],
+    return [
+        $section,
+        Pod::Weaver::Config::Assembler->expand_package($package),
+        ( $params_ref || {} )
+    ];
+}
+
+sub mvp_bundle_config {    ## no critic (RequireInterpolationOfMetachars)
+    return map { [ _bundle_list( @{$ARG} ) ] } (
+        [ '@Default/CorePrep', '@CorePrep' ],
+        [ '@Default/prelude',   'Region',  { region_name => 'prelude' } ],
+        [ '@Default/Name',      'Name' ],
+        [ '@Default/Version',   'Version' ],
+        [ 'SYNOPSIS',           'Generic' ],
+        [ 'DESCRIPTION',        'Generic' ],
+        [ 'OVERVIEW',           'Generic' ],
+        [ 'ATTRIBUTES',         'Collect', { command     => 'attr' } ],
+        [ 'METHODS',            'Collect', { command     => 'method' } ],
+        [ 'FUNCTIONS',          'Collect', { command     => 'function' } ],
+        [ '@Default/Leftovers', 'Leftovers' ],
+        [ '@Default/postlude',  'Region',  { region_name => 'postlude' } ],
+        [ '@Default/Installation',       'Installation' ],
+        [ '@Default/BugsAndLimitations', 'BugsAndLimitations' ],
+        [ '@Default/Availability',       'Availability' ],
+        [ '@Default/Authors',            'Authors' ],
+        [ '@Default/Legal',              'Legal' ],
+
     );
 }
 1;
