@@ -1,10 +1,7 @@
-use 5.008;
-use strict;
-use warnings;
-
 package Pod::Weaver::Section::Availability;
 
 # ABSTRACT: Add an AVAILABILITY pod section
+
 use Moose;
 with 'Pod::Weaver::Role::Section';
 use namespace::autoclean;

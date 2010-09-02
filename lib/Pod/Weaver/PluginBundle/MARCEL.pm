@@ -1,19 +1,18 @@
-use 5.008;
-use strict;
-use warnings;
-
 package Pod::Weaver::PluginBundle::MARCEL;
 
 # ABSTRACT: Build POD documentation like MARCEL
+
+use English '-no_match_vars';
 use namespace::autoclean;
 use Pod::Weaver::Config::Assembler;
 
 # plugins used
 use Pod::Weaver::Section::Installation;
 
-sub _exp { Pod::Weaver::Config::Assembler->expand_package( $_[0] ) }
+sub _exp { return Pod::Weaver::Config::Assembler->expand_package( $ARG[0] ) }
 
 sub mvp_bundle_config {
+    ## no critic (RequireInterpolationOfMetachars)
     return (
         [ '@Default/CorePrep', _exp('@CorePrep'), {} ],
         [ '@Default/prelude', _exp('Region'),  { region_name => 'prelude' } ],
