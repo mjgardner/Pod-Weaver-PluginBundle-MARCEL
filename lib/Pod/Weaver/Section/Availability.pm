@@ -88,7 +88,7 @@ sub _homepage_pod {
     # otherwise return some boilerplate
     return Pod::Elemental::Element::Pod5::Ordinary->new(
         {   content =>
-                "The project homepage is L<@{[ $self->homepage_url ]}>.",
+                "The project homepage is\nL<@{[ $self->homepage_url ]}>.",
         }
     );
 }
@@ -100,7 +100,8 @@ sub _cpan_pod {
         { content => <<"END_CPAN_TEXT" } );
 The latest version of this module is available from the Comprehensive Perl
 Archive Network (CPAN). Visit L<http://www.perl.com/CPAN/> to find a CPAN
-site near you, or see L<@{[ $self->cpan_url ]}>.
+site near you, or see
+L<@{[ $self->cpan_url ]}>.
 END_CPAN_TEXT
 }
 
@@ -110,10 +111,12 @@ sub _development_pod {
     return Pod::Elemental::Element::Pod5::Ordinary->new(
         {   content => !$self->is_github
             ? "The development version lives in a @{[ $self->repo_type ]} "
-                . "repository at L<@{[ $self->repo_web ]}>"
+                . "repository at\nL<@{[ $self->repo_web ]}>"
             : <<"END_GITHUB_TEXT"} );
-The development version lives at L<@{[ $self->repo_web ]}>
-and may be cloned from L<@{[ $self->repo_url ]}>
+The development version lives at
+L<@{[ $self->repo_web ]}>
+and may be cloned from
+L<@{[ $self->repo_url ]}>.
 Instead of sending patches, please fork this project using the standard
 git and github infrastructure.
 END_GITHUB_TEXT
