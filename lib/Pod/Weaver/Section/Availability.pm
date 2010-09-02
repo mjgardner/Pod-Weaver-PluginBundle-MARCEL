@@ -6,6 +6,7 @@ use Moose;
 with 'Pod::Weaver::Role::Section';
 use namespace::autoclean;
 use Moose::Autobox;
+use Regexp::DefaultFlags;
 
 # add a set of attributes to hold the repo information
 has zilla =>
@@ -71,23 +72,23 @@ sub _build_is_github {
 
     # we do this by looking at the URL for githubbyness
     my $repourl = $self->distmeta->{resources}{repository}{url}
-        or die "No repository URL set in distmeta";
-    return scalar $repourl =~ m{/github.com/};
+        or die 'No repository URL set in distmeta';
+    return scalar $repourl =~ m{/github\.com/};
 }
 
 sub _build_repo_data {
     my $self = shift;
 
     my $repourl = $self->distmeta->{resources}{repository}{url}
-        or die "No repository URL set in distmeta";
+        or die 'No repository URL set in distmeta';
     my $repoweb;
     if ( $self->is_github ) {
 
         # strip the access method off - we can then add it as needed
         my $nomethod = $repourl;
-        $nomethod =~ s!^(http|git|git\@github\.com):/*!!i;
-        $repourl = 'git://' . $nomethod;
-        $repoweb = 'http://' . $nomethod;
+        $nomethod =~ s{\A (http|git|git\@github\.com) :/* }{}i;
+        $repourl = "git://$nomethod";
+        $repoweb = "http://$nomethod";
     }
     return ( $repourl, $repoweb );
 }

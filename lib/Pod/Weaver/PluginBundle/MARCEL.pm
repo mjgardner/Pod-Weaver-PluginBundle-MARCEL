@@ -19,7 +19,8 @@ sub _bundle_list {
     ];
 }
 
-sub mvp_bundle_config {    ## no critic (RequireInterpolationOfMetachars)
+sub mvp_bundle_config {
+    ## no critic (RequireInterpolationOfMetachars)
     return map { [ _bundle_list( @{$ARG} ) ] } (
         [ '@Default/CorePrep', '@CorePrep' ],
         [ '@Default/prelude',   'Region',  { region_name => 'prelude' } ],
@@ -38,7 +39,6 @@ sub mvp_bundle_config {    ## no critic (RequireInterpolationOfMetachars)
         [ '@Default/Availability',       'Availability' ],
         [ '@Default/Authors',            'Authors' ],
         [ '@Default/Legal',              'Legal' ],
-
     );
 }
 1;

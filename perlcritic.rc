@@ -1,6 +1,6 @@
 severity = brutal
 verbose = 8
-exclude = RequireEmacsFileVariables RequirePODUseEncodingUTF8 RequireRcsKeywords
+exclude = RegularExpressions::RequireDotMatchAnything RegularExpressions::RequireExtendedFormatting RegularExpressions::RequireLineBoundaryMatching RequireEmacsFileVariables RequirePODUseEncodingUTF8 RequireRcsKeywords
 
 [Documentation::PodSpelling]
 stop_words = perlmodinstall github Gruenauer Metheringham plugin bugtracker CPAN
