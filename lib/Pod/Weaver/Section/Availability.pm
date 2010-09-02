@@ -2,8 +2,10 @@ package Pod::Weaver::Section::Availability;
 
 # ABSTRACT: Add an AVAILABILITY pod section
 
+use Carp;
 use Moose;
 with 'Pod::Weaver::Role::Section';
+## no critic (Modules::RequireExplicitInclusion)
 use namespace::autoclean;
 use Moose::Autobox;
 use Regexp::DefaultFlags;
@@ -72,7 +74,7 @@ sub _build_is_github {
 
     # we do this by looking at the URL for githubbyness
     my $repourl = $self->distmeta->{resources}{repository}{url}
-        or die 'No repository URL set in distmeta';
+        or croak 'No repository URL set in distmeta';
     return scalar $repourl =~ m{/github [.] com/};
 }
 
@@ -80,7 +82,7 @@ sub _build_repo_data {
     my $self = shift;
 
     my $repourl = $self->distmeta->{resources}{repository}{url}
-        or die 'No repository URL set in distmeta';
+        or croak 'No repository URL set in distmeta';
     my $repoweb;
     if ( $self->is_github ) {
 

@@ -8,6 +8,7 @@ use namespace::autoclean;
 use Moose::Autobox;
 
 sub weave_section {
+    ## no critic (Modules::RequireExplicitInclusion)
     my ( $self, $document, $input ) = @_;
     my $bugtracker = $input->{zilla}->distmeta->{resources}{bugtracker}{url}
         || 'http://rt.cpan.org';
